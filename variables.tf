@@ -146,6 +146,12 @@ variable "key_usage" {
   default     = "ENCRYPT_DECRYPT"
 }
 
+variable "deletion_prevention" {
+  description = "(Optional). Prevent Terraform from deleting the key on terraform destroy?"
+  type        = bool
+  default     = false
+}
+
 variable "deletion_window_in_days" {
   description = "(Optional). Deletion window in days for key deletion."
   type        = number
