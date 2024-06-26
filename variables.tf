@@ -3,7 +3,7 @@ locals {
   name_iam      = module.std.names.aws[var.account.name].title
   arn_partition = (var.arn_partition == null ? data.aws_partition.this.partition : var.arn_partition)
 
-  policy   = ((var.policy != null) ? jsonencode({
+  policy = ((var.policy != null) ? jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
@@ -11,7 +11,7 @@ locals {
         Principal = {
           AWS = "arn:${local.arn_partition}:iam::${data.aws_caller_identity.this.account_id}:root"
         },
-        Action = "kms:*",
+        Action   = "kms:*",
         Resource = "*"
       }
     ]
@@ -41,7 +41,7 @@ variable "account" {
   type = object({
     key      = optional(string, "current")
     provider = optional(string, "aws")
-    id       = optional(string, "*") 
+    id       = optional(string, "*")
     name     = string
     region   = optional(string, null)
   })
