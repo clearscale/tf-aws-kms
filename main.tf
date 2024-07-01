@@ -1,7 +1,3 @@
-provider "aws" {
-  region = var.region
-}
-
 module "std" {
   source =  "github.com/clearscale/tf-standards.git?ref=v1.0.0"
 
