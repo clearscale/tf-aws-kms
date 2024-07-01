@@ -61,5 +61,4 @@ module "kms" {
   primary_external_key_arn = var.primary_external_key_arn
 
   tags = var.tags
-
 }
