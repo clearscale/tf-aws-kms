@@ -16,6 +16,8 @@ locals {
       }
     ]
   }) : var.policy)
+
+  ssm_parameter_name = coalesce(var.ssm_parameter_name, "/kms/${var.env}/${local.name}")
 }
 
 variable "prefix" {
@@ -293,6 +295,12 @@ variable "grants" {
   description = "(Optional). A map of grant definitions to create."
   type        = any
   default     = {}
+}
+
+variable "ssm_parameter_name" {
+  type        = string
+  description = "(Required). SSM parameter name to store S3 bucket name."
+  default     = null
 }
 
 variable "tags" {
