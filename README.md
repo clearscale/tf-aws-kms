@@ -2,19 +2,31 @@
 
 Create and manage KMS keys using AWS best-practices.
 
-## Key Rotation
+## Defaults
+
+| Rule                                                                                                            | Supported | Notes                                                                                                                   |
+|-----------------------------------------------------------------------------------------------------------------|-----------|-------------------------------------------------------------------------------------------------------------------------|
+| Support a default key policy                                                                                    | Y         | See `var.policy`                                                                                                        |
+| Encryption keys must be rotated on a yearly basis at a minimum                                                  | Y         | See `var.rotation_period_in_days`. Default is 365 days.                                                                 |
+| Symmetric encryption keys should be used when sender and recipient of encrypted data have valid credentials to call AWS KMS | Y         | See `var.customer_master_key_spec` and `var.key_usage`.                                                                 |
+| KMS encryption keys must be in enabled state to properly encrypt and decrypt the resources                      | Y         | See `var.enabled`, `var.policy`, and `var.key_usage`                                                                    |
+| CMK waiting period should be set to 30 days to protect the keys from unauthorized / unintended deletion         | Y         | See `var.deletion_window_in_days`. Default is 30.                                                                       |
+| Retain production KMS keys                                                                                      | Y         | Not supported directly, but attaching a key policy (`var.policy`) that does not allow `KMS:Delete` will prevent deletions. The default policy (enabled when `var.policy == null`). Prevents deletion for all non-administrators and key owners. |
+| Create SSM parameter for KEY ID                                                                                 | Y         | The key ID is stored in the parameter store under a generated name starting with `/kms/(env) prefix. The name of the SSM Parameter can be changed using `var.ssm_parameter_name`. |
+
+### Key Rotation
 
 Key roation is enabled by default. The default rotation is set to 365 days. This is the bare minimum that is recommended. Ideally, keys would be rotated between every 30 and 90 days.
 
-## Key Usage
+### Key Usage
 
 The default key usage (`var.key_usage`) set to `ENCRYPT_DECRYPT`.
 
-## Deletion Window
+### Deletion Window
 
 The default deletion window (`var.deletion_window_in_days`) is set to 30 days. This is the minimum recommended to prevent unauthorized key deletions.
 
-## Key Policy
+### Key Policy
 
 The default key policy (`var.policy`) is not overly permissive, but should be customized. Consider specifying a custom key policy for every KMS key and only allow the required permissions. See the [Terraform documentation](https://github.com/terraform-aws-modules/terraform-aws-kms/blob/master/examples/complete/main.tf) for examples on setting key administrators and users which is also preferred. More information can also be found in the [AWS KMS Default Key Policy Documentation](https://docs.aws.amazon.com/kms/latest/developerguide/).
 
