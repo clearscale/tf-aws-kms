@@ -1,5 +1,5 @@
 module "std" {
-  source =  "github.com/clearscale/tf-standards.git?ref=v1.0.0"
+  source =  "git::https://github.com/clearscale/tf-standards.git?ref=c1ef5c7b2df858153a3e6ee90d92d70783029704"
 
   accounts = [var.account]
   prefix   = var.prefix
