@@ -9,9 +9,3 @@ module "std" {
   region   = var.region
   name     = var.name
 }
-
-#
-# AWS Data Variables
-#
-data "aws_caller_identity" "this" {}
-data "aws_partition"       "this" {}
