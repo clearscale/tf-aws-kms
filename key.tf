@@ -1,6 +1,5 @@
 module "kms" {
-  source  = "terraform-aws-modules/kms/aws"
-  version = "~> 3.1.0"
+  source  = "git::https://github.com/terraform-aws-modules/terraform-aws-kms.git?ref=fe1beca2118c0cb528526e022a53381535bb93cd"
 
   # General
   create                  = true

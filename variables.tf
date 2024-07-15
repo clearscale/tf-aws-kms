@@ -1,21 +1,5 @@
 locals {
-  name          = module.std.names.aws[var.account.name].general
-  name_iam      = module.std.names.aws[var.account.name].title
-  arn_partition = (var.arn_partition == null ? data.aws_partition.this.partition : var.arn_partition)
-
-  policy = ((var.policy != null) ? jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Principal = {
-          AWS = "arn:${local.arn_partition}:iam::${data.aws_caller_identity.this.account_id}:root"
-        },
-        Action   = "kms:*",
-        Resource = "*"
-      }
-    ]
-  }) : var.policy)
+  name = module.std.names.aws[var.account.name].general
 }
 
 variable "prefix" {
@@ -72,16 +56,6 @@ variable "description" {
   type        = string
   description = "(Optional). The description of the KMS key."
   default     = "Custom KMS key."
-}
-
-#
-# Example:
-# "arn:(aws|aws-us-gov):iam::123456789012:root"
-#
-variable "arn_partition" {
-  type        = string
-  description = "(Optional). Override the partition to specify in the ARN (aws or aws-us-gov)."
-  default     = null
 }
 
 variable "enabled" {
@@ -169,6 +143,8 @@ variable "key_usage" {
   default     = "ENCRYPT_DECRYPT"
 }
 
+# Check the default policy before applying a custom policy:
+# https://github.com/terraform-aws-modules/terraform-aws-kms/blob/fe1beca2118c0cb528526e022a53381535bb93cd/main.tf#L95
 variable "policy" {
   description = "(Optional). A valid policy JSON document. Although this is a key policy, not an IAM policy, an `aws_iam_policy_document`, in the form that designates a principal, can be used."
   type        = string
