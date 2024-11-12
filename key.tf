@@ -59,5 +59,5 @@ module "kms" {
   create_replica_external  = var.create_replica_external
   primary_external_key_arn = var.primary_external_key_arn
 
-  tags = var.tags
+  tags = local.tags
 }

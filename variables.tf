@@ -1,5 +1,8 @@
-locals {
-  name = module.std.names.aws[var.account.name].general
+# tflint-ignore: terraform_unused_declarations
+variable "overrides" {
+  description = "(Optional). A map of overrides to pass to the module that can be used by the local overrides."
+  type        = map(any)
+  default     = {}
 }
 
 variable "prefix" {

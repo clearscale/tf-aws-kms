@@ -48,32 +48,27 @@ The default key policy (`var.policy`) is not overly permissive, but should be cu
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.55.0 |
+No providers.
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_kms"></a> [kms](#module\_kms) | terraform-aws-modules/kms/aws | ~> 3.1.0 |
-| <a name="module_std"></a> [std](#module\_std) | github.com/clearscale/tf-standards.git | v1.0.0 |
+| <a name="module_kms"></a> [kms](#module\_kms) | git::https://github.com/terraform-aws-modules/terraform-aws-kms.git | fe1beca2118c0cb528526e022a53381535bb93cd |
+| <a name="module_ssm"></a> [ssm](#module\_ssm) | git::https://github.com/terraform-aws-modules/terraform-aws-ssm-parameter.git | b7659e8b46aa626065c60fbfa7b78c1fedf43d7c |
+| <a name="module_std"></a> [std](#module\_std) | git::https://github.com/clearscale/tf-standards.git | c1ef5c7b2df858153a3e6ee90d92d70783029704 |
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [aws_caller_identity.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
-| [aws_partition.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |
+No resources.
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_account"></a> [account](#input\_account) | (Optional). Current cloud provider account info. | <pre>object({<br>    key      = optional(string, "current")<br>    provider = optional(string, "aws")<br>    id       = optional(string, "*") <br>    name     = string<br>    region   = optional(string, null)<br>  })</pre> | <pre>{<br>  "id": "*",<br>  "name": "shared"<br>}</pre> | no |
+| <a name="input_account"></a> [account](#input\_account) | (Optional). Current cloud provider account info. | <pre>object({<br>    key      = optional(string, "current")<br>    provider = optional(string, "aws")<br>    id       = optional(string, "*")<br>    name     = string<br>    region   = optional(string, null)<br>  })</pre> | <pre>{<br>  "id": "*",<br>  "name": "shared"<br>}</pre> | no |
 | <a name="input_aliases"></a> [aliases](#input\_aliases) | (Optional). A list of aliases to create. Note - due to the use of `toset()`, values must be static strings and not computed values. | `list(string)` | `[]` | no |
 | <a name="input_aliases_use_name_prefix"></a> [aliases\_use\_name\_prefix](#input\_aliases\_use\_name\_prefix) | (Optional). Determines whether the alias name is used as a prefix. | `bool` | `false` | no |
-| <a name="input_arn_partition"></a> [arn\_partition](#input\_arn\_partition) | (Optional). Override the partition to specify in the ARN (aws or aws-us-gov). | `string` | `null` | no |
 | <a name="input_bypass_policy_lockout_safety_check"></a> [bypass\_policy\_lockout\_safety\_check](#input\_bypass\_policy\_lockout\_safety\_check) | (Optional). A flag to indicate whether to bypass the key policy lockout safety check. Setting this value to true increases the risk that the KMS key becomes unmanageable. | `bool` | `false` | no |
 | <a name="input_client"></a> [client](#input\_client) | (Optional). Name of the client | `string` | `"ClearScale"` | no |
 | <a name="input_computed_aliases"></a> [computed\_aliases](#input\_computed\_aliases) | (Optional). A map of aliases to create. Values provided via the `name` key of the map can be computed from upstream resources. | `any` | `{}` | no |
@@ -104,6 +99,7 @@ The default key policy (`var.policy`) is not overly permissive, but should be cu
 | <a name="input_multi_region"></a> [multi\_region](#input\_multi\_region) | (Optional). Indicates whether the KMS key is a multi-Region (true) or regional (false) key. Defaults to false. | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | (Required). The name (e.g., alias) of the KMS key. | `string` | n/a | yes |
 | <a name="input_override_policy_documents"></a> [override\_policy\_documents](#input\_override\_policy\_documents) | (Optional). List of IAM policy documents that are merged together into the exported document. In merging, statements with non-blank `sid`s will override statements with the same `sid`. | `list(string)` | `[]` | no |
+| <a name="input_overrides"></a> [overrides](#input\_overrides) | (Optional). A map of overrides to pass to the module that can be used by the local overrides. | `map(any)` | `{}` | no |
 | <a name="input_policy"></a> [policy](#input\_policy) | (Optional). A valid policy JSON document. Although this is a key policy, not an IAM policy, an `aws_iam_policy_document`, in the form that designates a principal, can be used. | `string` | `null` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | (Optional). Prefix override for all generated naming conventions. | `string` | `"cs"` | no |
 | <a name="input_primary_external_key_arn"></a> [primary\_external\_key\_arn](#input\_primary\_external\_key\_arn) | (Optional). The primary external key arn of a multi-region replica external key. | `string` | `null` | no |
@@ -113,6 +109,7 @@ The default key policy (`var.policy`) is not overly permissive, but should be cu
 | <a name="input_rotation_period_in_days"></a> [rotation\_period\_in\_days](#input\_rotation\_period\_in\_days) | (Optional). Custom period of time between each rotation date. Must be a number between 90 and 2560 (inclusive) | `number` | `365` | no |
 | <a name="input_route53_dnssec_sources"></a> [route53\_dnssec\_sources](#input\_route53\_dnssec\_sources) | (Optional). A list of maps containing `account_ids` and Route53 `hosted_zone_arn` that will be allowed to sign DNSSEC records. | `list(any)` | `[]` | no |
 | <a name="input_source_policy_documents"></a> [source\_policy\_documents](#input\_source\_policy\_documents) | (Optional). List of IAM policy documents that are merged together into the exported document. Statements must have unique `sid`s. | `list(string)` | `[]` | no |
+| <a name="input_ssm_parameter_name"></a> [ssm\_parameter\_name](#input\_ssm\_parameter\_name) | (Required). SSM parameter name to store KMS key ID. | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional). A map of tags to assign to the resources. | `map(string)` | `null` | no |
 | <a name="input_valid_to"></a> [valid\_to](#input\_valid\_to) | (Optional). Time at which the imported key material expires. When the key material expires, AWS KMS deletes the key material and the CMK becomes unusable. If not specified, key material does not expire. | `string` | `null` | no |
 
