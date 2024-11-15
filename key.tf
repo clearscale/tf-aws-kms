@@ -5,7 +5,7 @@ module "kms" {
   create                  = true
   create_external         = var.create_external
   is_enabled              = var.enabled
-  description             = var.description
+  description             = local.description
   key_usage               = var.key_usage
   multi_region            = var.multi_region
 
