@@ -1,10 +1,3 @@
-provider "aws" {
-  region = local.region
-  default_tags {
-    tags = local.tags
-  }
-}
-
 module "std" {
   source =  "git::https://github.com/clearscale/tf-standards.git?ref=c1ef5c7b2df858153a3e6ee90d92d70783029704"
 
