@@ -1,5 +1,5 @@
 provider "aws" {
-  region = var.region
+  region = local.region
   default_tags {
     tags = local.tags
   }
@@ -16,3 +16,8 @@ module "std" {
   region   = var.region
   name     = var.name
 }
+
+#
+# AWS Data Variables
+#
+data "aws_caller_identity" "this" {}
