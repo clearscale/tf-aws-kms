@@ -1,20 +1,20 @@
-provider "aws" {
-  region = local.region
-  default_tags {
-    tags = local.tags
-  }
-}
+# provider "aws" {
+#   region = local.region
+#   default_tags {
+#     tags = local.tags
+#   }
+# }
 
 module "std" {
   source =  "git::https://github.com/clearscale/tf-standards.git?ref=c1ef5c7b2df858153a3e6ee90d92d70783029704"
 
-  accounts = [var.account]
-  prefix   = var.prefix
-  client   = var.client
-  project  = var.project
-  env      = var.env
-  region   = var.region
-  name     = var.name
+  accounts = [local.account]
+  prefix   = local.prefix
+  client   = local.client
+  project  = local.project
+  env      = local.env
+  region   = local.region
+  name     = local.name_std
 }
 
 #
